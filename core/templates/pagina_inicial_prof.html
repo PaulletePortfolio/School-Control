@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pagina Professores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+    <style>
+
+        body {font-family: 'Arial', sans-serif;margin: 0;padding: 0;height: 100vh;overflow-y: auto;background-color: #34495e;color: #333;}
+        .container {display: flex;min-height: 100vh;padding: 0;width: 100%;margin: 20px auto;max-width: 1200px;z-index: 1;background-color: #fff;border-radius: 8px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);}
+        .content {width: 100%;padding: 30px;display: flex;flex-direction: column;overflow-y: auto;}
+        .container_Perfil, .container_Turmas, .container_Sub1, .container_Sub2 {background-color: #fff;padding: 20px;border-radius: 8px;margin-bottom: 20px;border: 1px solid #ddd;}
+        .container_Perfil {display: flex;align-items: center;background-color: #2c3e50;color: white;}
+        .container_Nav {display: flex;align-items: center;justify-content: space-between;background-color: #34495e;color: white;margin-bottom: 30px;padding: 15px;border-radius: 8px;flex-wrap: wrap;}
+        .navbar-brand, .nav-link {color: white;font-weight: bold;white-space: nowrap;}
+        .LOGO-image {width: 100px;height: auto;padding: 10px;border-radius: 14px;}
+        .botaoturma {width: 100%;padding: 12px;margin-top: 10px;background-color: #34495e;color: white;border: none;border-radius: 5px;text-align: left;font-weight: bold;font-size: 1em;}
+        .footer-row {display: flex;gap: 20px;}
+        .container_Sub1, .container_Sub2 {flex: 1;text-align: left;padding: 50px;}
+        .Anuncio {width: 100%;height: auto;border-radius: 5px;}
+        h1, h2 {margin: 0;font-weight: bold;}
+        h1 {font-size: 1.5em;margin-bottom: 5px;color: white;}
+        h2 {font-size: 1.2em;color: #2c3e50;margin-bottom:10px;}
+        p {font-size: 1.2em;margin: 5px 0 0;color: #bdc3c7;}
+        a {text-decoration: none; color: white; }
+        a:hover {color: white;}
+        .letramanual{font-size: 1.0em ; color:  #2c3e50;margin:10px;}
+        .letramanual:hover{color: black;}
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 15px;
+                margin:20px;
+                width:94%;
+                display:;
+            }
+            .content{
+                width:100%;
+
+            }
+
+            .container_Nav {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .LOGO-image {
+                margin-bottom: 10px;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .navbar-nav .nav-item {
+                margin-bottom: 5px;
+            }
+
+            .footer-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            h1 {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 1.1em;
+            }
+
+            .botaoturma {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 576px) {
+            
+            .container {
+                flex-direction: column;
+                padding: 15px;
+                margin:20px;
+                width:90%;
+                display:flex;
+            }
+            .content{
+                width:100%;
+
+            }
+            
+            
+            .navbar-brand, .nav-link {
+                font-size: 0.9em;
+            }
+
+            .conteiner{
+                margin:30px;
+            }
+
+            .LOGO-image {
+                width: 100px;
+            }
+
+            .botaoturma {
+                font-size: 0.8em;
+            }
+
+            .footer-row {
+                gap: 5px;
+            }
+        }
+    
+    </style>
+
+</head>
+<body>
+
+    {% load static %}
+
+    <div class="container">
+        <div class="content">  
+            <nav class="navbar navbar-expand-lg container_Nav">
+                <img src="{% static 'Image/Logo_Branco.png' %}" alt="Logo" class="LOGO-image">
+                        <br>
+                        <h1>{{professor.nome_professor}}</h1>
+                        <p>Seja bem Vindo(a)!</p>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Drive Teachers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://wa.me/5554999397677?text=Olá,%20gostaria%20de%20mais%20informações!" target="_blank" >Aulas Recuperativas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://wa.me/5554999397677?text=Olá,%20gostaria%20de%20mais%20informações!" target="_blank"> Suporte WEB </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Sair</a></li>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="container_Turmas">
+                <h2>Turmas Ministradas</h2>
+                <div class="turma-text">
+                    {% for turma in turmas %}
+                        <button class="botaoturma">
+                            <a href="{% url 'turma_detail_prof' turma.id %}">{{ turma.nome_turma }}</a>
+                        </button>
+                    {% empty %}
+                        <button class="botaoturma"><a>Nenhuma turma encontrada.</a></button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="footer-row">
+                <div class="container_Sub1">
+                    <h2>Manuais de Sobrevivência</h2>
+                    <ul>
+                        {% for manual in manuais %}
+                            <li><a class="letramanual" href="{{ manual.arquivo.url }}" download>{{ manual.titulo }}</a></li>
+                        {% empty %}<li>Nenhum manual disponível</li>{% endfor %}
+                    </ul>
+                </div>
+
+                
+                <div class="container_Sub2">
+                    <h2>Treinamentos</h2>
+                        <ul>
+                            {% for evento in eventos %}
+                                <li>
+                                    <a class="letramanual">{{ evento.titulo }}</a><br>
+                                    <a class="letramanual">Sala: {{ evento.conta_sala_livre }}</a><br>
+                                    <a class="letramanual">Data: {{ evento.data|date:"d/m/Y" }}</a><br>
+                                    <a class="letramanual">Horário:{{ evento.data|time:"H:i" }}</a><br>
+                                </li>
+                            {% empty %}
+                                <li>Nenhum evento disponível.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
